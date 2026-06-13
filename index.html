@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Bahan Ajar Universitas Terbuka</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+
+            <a href="#"
+                :class="{active:tab==='stok'}"
+                @click.prevent="tab='stok'">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                Stok Bahan Ajar
+            </a>
+
+            <a href="#"
+                :class="{active:tab==='order'}"
+                @click.prevent="tab='order'">
+                <i class="fa-solid fa-cart-plus"></i>
+                Delivery Order
+            </a>
+
+            <a href="#"
+                :class="{active:tab==='tracking'}"
+                @click.prevent="tab='tracking'">
+                <i class="fa-solid fa-truck"></i>
+                Tracking Pengiriman
+            </a>
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- STOK -->
+            <ba-stock-table
+                v-if="tab==='stok'"
+                :stok="stok"
+                :upbjj-list="upbjjList"
+                :kategori-list="kategoriList">
+            </ba-stock-table>
+
+            <!-- ORDER -->
+            <order-form
+                v-if="tab==='order'"
+                :paket-list="paketList"
+                :pengiriman-list="pengirimanList"
+                :tracking-list="trackingList"
+                @add-do="tambahDO"> 
+            </order-form>
+
+            <!-- TRACKING -->
+            <do-tracking
+                v-if="tab==='tracking'"
+                :tracking-list="trackingList">
+            </do-tracking>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICE -->
+    <script src="js/services/api.js"></script>
+
+    <!-- COMPONENT -->
+    <script src="js/components/status-badge.js"></script>
+    <script src="js/components/app-modal.js"></script>
+    <script src="js/components/stock-table.js"></script>
+    <script src="js/components/order-form.js"></script>
+    <script src="js/components/do-tracking.js"></script>
+
+    <!-- ROOT APP -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

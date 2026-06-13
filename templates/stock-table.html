@@ -1,0 +1,147 @@
+<template id="tpl-stock-table">
+  <div class="section-wrap">
+
+    <div class="section-header">
+      <h2><i class="fa-solid fa-boxes-stacked"></i> Stok Bahan Ajar</h2>
+      <button class="btn btn-primary" @click="openTambahForm">
+        <i class="fa-solid fa-plus"></i> Tambah
+      </button>
+    </div>
+
+    <div class="filter-bar">
+      <select v-model="filterUpbjj">
+        <option value="">Semua UPBJJ</option>
+        <option v-for="u in upbjjList" :key="u" :value="u">{{ u }}</option>
+      </select>
+      <select v-model="filterKategori">
+        <option value="">Semua Kategori</option>
+        <option v-for="k in kategoriList" :key="k" :value="k">{{ k }}</option>
+      </select>
+      <select v-model="sortBy">
+        <option value="">Urutan Default</option>
+        <option value="judul">Judul A-Z</option>
+        <option value="qty">Qty</option>
+        <option value="harga">Harga</option>
+      </select>
+      <label>
+        <input type="checkbox" v-model="onlyWarning"> Hanya Stok Warning
+      </label>
+      <button class="btn btn-secondary" @click="resetFilter">
+        <i class="fa-solid fa-rotate-left"></i> Reset
+      </button>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Kode</th>
+          <th>Judul</th>
+          <th>Kategori</th>
+          <th>UPBJJ</th>
+          <th>Lokasi Rak</th>
+          <th>Harga</th>
+          <th>Qty</th>
+          <th>Safety</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if="filteredData.length === 0">
+          <td colspan="10" style="text-align:center;padding:20px">
+            Tidak ada data
+          </td>
+        </tr>
+        <tr
+          v-for="item in filteredData"
+          :key="item.kode"
+          :class="{ 'row-warning': item.qty < item.safety || item.qty === 0 }">
+          <td>{{ item.kode }}</td>
+          <td>{{ item.judul }}</td>
+          <td>{{ item.kategori }}</td>
+          <td>{{ item.upbjj }}</td>
+          <td>{{ item.lokasiRak }}</td>
+          <td>{{ item.harga }}</td>
+          <td>{{ item.qty }}</td>
+          <td>{{ item.safety }}</td>
+          <td>
+            <span v-if="item.qty === 0" class="badge badge-danger">Kosong</span>
+            <span v-else-if="item.qty < item.safety" class="badge badge-warning">Menipis</span>
+            <span v-else class="badge badge-success">Aman</span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-warning" @click="editData(item)">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" @click="hapusData(item)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- FORM MODAL -->
+    <div class="modal-overlay" v-if="showForm" @click.self="showForm=false">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3>{{ isEdit ? 'Edit' : 'Tambah' }} Stok</h3>
+          <button class="modal-close" @click="showForm=false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Kode</label>
+            <input v-model="form.kode" :disabled="isEdit" placeholder="Kode bahan ajar" />
+          </div>
+          <div class="form-group">
+            <label>Judul</label>
+            <input v-model="form.judul" placeholder="Judul bahan ajar" />
+          </div>
+          <div class="form-group">
+            <label>Kategori</label>
+            <select v-model="form.kategori">
+              <option value="">-- Pilih Kategori --</option>
+              <option v-for="k in kategoriList" :key="k" :value="k">{{ k }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>UPBJJ</label>
+            <select v-model="form.upbjj">
+              <option value="">-- Pilih UPBJJ --</option>
+              <option v-for="u in upbjjList" :key="u" :value="u">{{ u }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Lokasi Rak</label>
+            <input v-model="form.lokasiRak" placeholder="Contoh: RAK-A1" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Harga</label>
+              <input type="number" v-model.number="form.harga" />
+            </div>
+            <div class="form-group">
+              <label>Qty</label>
+              <input type="number" v-model.number="form.qty" />
+            </div>
+            <div class="form-group">
+              <label>Safety Stock</label>
+              <input type="number" v-model.number="form.safety" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Catatan</label>
+            <textarea v-model="form.catatanHTML" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" @click="showForm=false"><i class="fa-solid fa-times"></i> Batal</button>
+          <button class="btn btn-primary" @click="konfirmasiSimpan">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>

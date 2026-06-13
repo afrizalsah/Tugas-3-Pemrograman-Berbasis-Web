@@ -1,0 +1,90 @@
+<template id="tpl-do-tracking">
+
+<div class="card tracking-table">
+
+    <h3>Daftar Tracking DO</h3>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Nomor DO</th>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Ekspedisi</th>
+                <th>Paket</th>
+                <th>Tanggal Kirim</th>
+                <th>Total</th>
+                <th>Perjalanan</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr
+                v-for="(item,key) in trackingList"
+                :key="key">
+
+                <td>{{ key }}</td>
+
+                <td>{{ item.nim }}</td>
+
+                <td>{{ item.nama }}</td>
+
+                <td>
+
+                    <span
+                        v-if="typeof item.ekspedisi === 'object'">
+
+                        {{ item.ekspedisi.kode }}
+                        -
+                        {{ item.ekspedisi.nama }}
+
+                    </span>
+
+                    <span v-else>
+
+                        {{ item.ekspedisi }}
+
+                    </span>
+
+                </td>
+
+                <td>{{ item.paket }}</td>
+
+                <td>{{ item.tanggalKirim }}</td>
+
+                <td>
+
+                    Rp
+                    {{ item.total.toLocaleString('id-ID') }}
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="check-btn"
+                        @click="showPerjalanan(item)">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                        Check
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</template>

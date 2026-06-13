@@ -1,0 +1,36 @@
+<template id="tpl-app-modal">
+
+    <div
+        class="modal-base modal-vue"
+        v-if="show">
+
+        <div
+            class="modal-content modal-form">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+
+                <h2>
+
+                    {{ title }}
+
+                </h2>
+
+                <button
+                    class="modal-btn-close"
+                    @click="$emit('close')">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+            <!-- BODY -->
+            <slot></slot>
+
+        </div>
+
+    </div>
+
+</template>
