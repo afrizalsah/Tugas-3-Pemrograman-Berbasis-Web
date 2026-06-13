@@ -1222,3 +1222,32 @@ table td.col-nowrap {
     padding: 14px 20px;
     border-top: 1px solid #e5e7eb;
 }
+
+/* ===========================
+   SIDEBAR BRAND / LOGO
+=========================== */
+.sidebar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.sidebar-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    line-height: 1.4;
+    opacity: 0.9;
+}
