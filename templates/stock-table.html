@@ -136,9 +136,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" @click="showForm=false"><i class="fa-solid fa-times"></i> Batal</button>
+          <button class="btn btn-secondary" @click="showForm=false">
+            <i class="fa-solid fa-times"></i> Batal</button>
           <button class="btn btn-primary" @click="konfirmasiSimpan">
-            <i class="fa-solid fa-floppy-disk"></i> Simpan
+            <i class="fa-solid fa-floppy-disk"></i>
+             {{ isEdit ? 'Update' : 'Simpan' }}
           </button>
         </div>
       </div>

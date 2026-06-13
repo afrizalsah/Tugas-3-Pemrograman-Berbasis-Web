@@ -135,7 +135,7 @@ Vue.component('ba-stock-table', {
                 this.tambahData();
             }
 
-            Swal.fire({ icon: 'success', title: 'Data Berhasil Disimpan' });
+            Swal.fire({ icon: 'success', title: this.isEdit ? 'Data Berhasil Diupdate' : 'Data Berhasil Disimpan' });
             this.showForm = false;
             this.resetForm();
         },
